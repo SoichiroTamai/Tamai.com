@@ -53,17 +53,18 @@
             xhr.open('GET', url);
             xhr.send();
             xhr.onload = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    message.innerHTML = '成功';
-                    result.innerHTML = 'Hashed: ' + hash(password);
-                    //window.location = url;
-                } else {
-                    const message = document.getElementById('message');
-                    const input = document.getElementById('password');
-                    message.innerHTML = 'パスワードが違います';
-                    result.innerHTML = 'Hashed: ' + hash(password);
-                    input.value = '';
-                }
+                //if (xhr.readyState === 4 && xhr.status === 200) {
+                message.innerHTML = '成功';
+                result.innerHTML = 'Hashed: ' + hash(password);
+                window.location = url;
+                // }
+                //  else {
+                //     const message = document.getElementById('message');
+                //     const input = document.getElementById('password');
+                //     message.innerHTML = 'パスワードが違います';
+                //     result.innerHTML = 'Hashed: ' + hash(password);
+                //     input.value = '';
+                // }
             };
             xhr.onerror = function() {
                 const message = document.getElementById('message');
