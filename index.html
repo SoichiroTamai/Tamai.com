@@ -24,6 +24,7 @@
             <form id="form">
                 <p id="message">パスワードを入力してください</p>
                 <input type="password" placeholder="password" id="password">
+                <p id="result" style="text-align: left; font-family: 'Roboto Mono'; font-size: 20.5px;">Hashed: </p>
             </form>
 
         </main>
@@ -40,37 +41,51 @@
     </footer>
 
     <script>
+        // function hash(text) {
+        //     const sha = new jsSHA('SHA-256', 'TEXT');
+        //     sha.update(text);
+        //     return sha.getHash('HEX');
+        // }
+
+        // function auth(password) {
+        //     const url = hash(password);
+        //     const xhr = new XMLHttpRequest();
+        //     xhr.open('GET', url);
+        //     xhr.send();
+        //     xhr.onload = function() {
+        //         if (xhr.readyState === 4 && xhr.status === 200) {
+        //             message.innerHTML = '成功';
+        //             window.location = url;
+        //         } else {
+        //             const message = document.getElementById('message');
+        //             const input = document.getElementById('password');
+        //             message.innerHTML = 'パスワードが違います';
+        //             input.value = '';
+        //         }
+        //     };
+        //     xhr.onerror = function() {
+        //         const message = document.getElementById('message');
+        //         message.innerHTML = 'Sorry, ERROR !';
+        //     };
+        // }
+        // const form = document.getElementById('form');
+        // form.addEventListener('submit', function(event) {
+        //     const password = document.getElementById('password').value;
+        //     auth(password);
+        //     event.preventDefault();
+        // });
+
+        //確認用
         function hash(text) {
             const sha = new jsSHA('SHA-256', 'TEXT');
             sha.update(text);
             return sha.getHash('HEX');
         }
-
-        function auth(password) {
-            const url = hash(password);
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.send();
-            xhr.onload = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    message.innerHTML = '成功';
-                    window.location = url;
-                } else {
-                    const message = document.getElementById('message');
-                    const input = document.getElementById('password');
-                    message.innerHTML = 'パスワードが違います';
-                    input.value = '';
-                }
-            };
-            xhr.onerror = function() {
-                const message = document.getElementById('message');
-                message.innerHTML = 'Sorry, ERROR !';
-            };
-        }
         const form = document.getElementById('form');
         form.addEventListener('submit', function(event) {
             const password = document.getElementById('password').value;
-            auth(password);
+            const result = document.getElementById('result');
+            result.innerHTML = 'Hashed: ' + hash(password);
             event.preventDefault();
         });
     </script>
