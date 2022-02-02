@@ -53,11 +53,12 @@
             xhr.send();
             xhr.onload = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
+                    message.innerHTML = '成功';
                     window.location = url;
                 } else {
                     const message = document.getElementById('message');
                     const input = document.getElementById('password');
-                    message.innerHTML = 'Wrong password! Try again.';
+                    message.innerHTML = 'パスワードが違います';
                     input.value = '';
                 }
             };
