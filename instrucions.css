@@ -1,4 +1,22 @@
-.Centered {
+.MainBox object {
+    margin-top: 2em;
+}
+
+
+/* テキストファイル*/
+
+#gameTxt {
+    /* 非表示 */
+    display: none;
+}
+
+footer {
     background: #cccccc;
+    border-top: groove;
+    margin-top: 2em;
+    text-align: right;
+}
+
+footer address {
     text-align: center;
 }

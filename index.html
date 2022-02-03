@@ -18,29 +18,29 @@
 
     <section class="MainBox">
         <main>
-            <!-- COVER株式会社様 -->
-            <h1 class="ItemName">COVER株式会社様 向け</h1>
-
             <form id="form">
                 <p id="message">パスワードを入力してください</p>
                 <input type="password" placeholder="password" id="password">
-                <p id="result" style="text-align: left; font-family: 'Roboto Mono'; font-size: 20.5px;">Hashed: </p>
+                <button id="btn_passview">表示</button>
+                <object id="gameTxt" data="155f21a2b94b4d9db8e6ced08572099146d5ca5def4ad03632644504a10e3cac/game.txt" type="text/plain" WIDTH="100%" HEIGHT=""></object>
             </form>
 
         </main>
     </section>
 
-    <footer class="Centered">
-        <p style="border-top: groove;">2022 玉井 宗一郎</p>
-
+    <footer>
         <address>
-			お問い合わせ等がございましたらこちらのメールにて(主に法人向け) → ：
-			<a href="mailto:tamai.work.mail@gmail.com?subject=お問い合わせ">
-			サイト制作者</a>
+			<a href="mailto:tamai.work.mail@gmail.com?subject=お問い合わせ">お問い合わせ</a>
 		</address>
+        <p>&copy; 2022 玉井 宗一郎</p>
     </footer>
 
     <script>
+        let btn_passview = document.getElementById("btn_passview");
+        let input_pass = document.getElementById("input_pass");
+
+        const text = document.getElementById("text")
+
         function hash(text) {
             const sha = new jsSHA('SHA-256', 'TEXT');
             sha.update(text);
@@ -55,14 +55,17 @@
             xhr.onload = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     message.innerHTML = '成功';
-                    result.innerHTML = 'Hashed: ' + hash(password);
-                    window.location = url;
+                    //result.innerHTML = 'Hashed: ' + hash(password);
+                    //window.location = url;
+                    document.getElementById('gameTxt').style.display = 'inline';
+
                 } else {
                     const message = document.getElementById('message');
                     const input = document.getElementById('password');
                     message.innerHTML = 'パスワードが違います';
-                    result.innerHTML = 'Hashed: ' + hash(password);
+                    // result.innerHTML = 'Hashed: ' + hash(password);
                     input.value = '';
+                    document.getElementById('gameTxt').style.display = 'none';
                 }
             };
             xhr.onerror = function() {
@@ -76,16 +79,6 @@
             auth(password);
             event.preventDefault();
         });
-
-        //確認用
-
-        // const form = document.getElementById('form');
-        // form.addEventListener('submit', function(event) {
-        //     const password = document.getElementById('password').value;
-        //     const result = document.getElementById('result');
-        //     result.innerHTML = 'Hashed: ' + hash(password);
-        //     event.preventDefault();
-        // });
     </script>
 
 </body>
