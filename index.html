@@ -21,7 +21,8 @@
             <form id="form">
                 <p id="message">パスワードを入力してください</p>
                 <input type="password" placeholder="password" id="password">
-                <!-- <button id="btn_passview">表示</button> -->
+                <button id="btn_passview">表示</button>
+                <button id="btn_passOK">決定</button>
                 <object id="gameTxt" data="155f21a2b94b4d9db8e6ced08572099146d5ca5def4ad03632644504a10e3cac/game.txt" type="text/plain" WIDTH="100%" HEIGHT=""></object>
             </form>
 
@@ -36,66 +37,69 @@
     </footer>
 
     <script>
-        // // 表示切り替え
-        // let btn_passview = document.getElementById("btn_passview");
-        // let input_pass = document.getElementById("password");
+        // 表示切り替え
+        let btn_passview = document.getElementById("btn_passview");
+        let input_pass = document.getElementById("password");
 
-        // btn_passview.addEventListener("click", (e) => {
+        btn_passview.addEventListener("click", (e) => {
 
-        //     e.preventDefault();
+            e.preventDefault();
 
-        //     if (input_pass.type === 'password') {
+            if (input_pass.type === 'password') {
 
-        //         input_pass.type = 'text';
-        //         btn_passview.textContent = '非表示';
+                input_pass.type = 'text';
+                btn_passview.textContent = '非表示';
 
-        //     } else {
+            } else {
 
-        //         input_pass.type = 'password';
-        //         btn_passview.textContent = '表示';
-        //     }
-        // });
+                input_pass.type = 'password';
+                btn_passview.textContent = '表示';
+            }
+        });
 
-        // Hash
-        const text = document.getElementById("text")
+        btn_passview.addEventListener("click", (e) => {
 
-        function hash(text) {
-            const sha = new jsSHA('SHA-256', 'TEXT');
-            sha.update(text);
-            return sha.getHash('HEX');
-        }
+            // Hash
+            const text = document.getElementById("text")
 
-        function auth(password) {
-            const url = hash(password);
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.send();
-            xhr.onload = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    message.innerHTML = '成功';
-                    //result.innerHTML = 'Hashed: ' + hash(password);
-                    //window.location = url;
-                    document.getElementById('gameTxt').style.display = 'inline';
+            function hash(text) {
+                const sha = new jsSHA('SHA-256', 'TEXT');
+                sha.update(text);
+                return sha.getHash('HEX');
+            }
 
-                } else {
+            function auth(password) {
+                const url = hash(password);
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.send();
+                xhr.onload = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        message.innerHTML = '成功';
+                        //result.innerHTML = 'Hashed: ' + hash(password);
+                        //window.location = url;
+                        document.getElementById('gameTxt').style.display = 'inline';
+
+                    } else {
+                        const message = document.getElementById('message');
+                        const input = document.getElementById('password');
+                        message.innerHTML = 'パスワードが違います';
+                        // result.innerHTML = 'Hashed: ' + hash(password);
+                        input.value = '';
+                        document.getElementById('gameTxt').style.display = 'none';
+                    }
+                };
+                xhr.onerror = function() {
                     const message = document.getElementById('message');
-                    const input = document.getElementById('password');
-                    message.innerHTML = 'パスワードが違います';
-                    // result.innerHTML = 'Hashed: ' + hash(password);
-                    input.value = '';
-                    document.getElementById('gameTxt').style.display = 'none';
-                }
-            };
-            xhr.onerror = function() {
-                const message = document.getElementById('message');
-                message.innerHTML = 'Sorry, ERROR !';
-            };
-        }
-        const form = document.getElementById('form');
-        form.addEventListener('submit', function(event) {
-            const password = document.getElementById('password').value;
-            auth(password);
-            event.preventDefault();
+                    message.innerHTML = 'Sorry, ERROR !';
+                };
+            }
+            const form = document.getElementById('form');
+            form.addEventListener('submit', function(event) {
+                const password = document.getElementById('password').value;
+                auth(password);
+                event.preventDefault();
+            });
         });
     </script>
 
